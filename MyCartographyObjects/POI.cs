@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MyCartographyObjects
 {
-    public class POI : Coordonnees
+    public class POI : Coordonnees, IIsPointClose
     {
         #region VARIABLES MEMBRES
         private string _description;
@@ -21,20 +21,21 @@ namespace MyCartographyObjects
         #endregion
 
         #region CONSTRUCTEURS
-        public POI() : this(50.652, 5.045, "Rue Peetermans, Seraing") { } //Constructeur par defaut
-
-        public POI(double newlongitude, double newlatitude, string newdescription) : base(newlongitude, newlatitude)
+        public POI() : base(0,0)//Constructeur par defaut
         {
-            Longitude = newlongitude;
-            Latitude = newlatitude;
-            Description = newdescription;
+            this.Description = "Rue peetermans, Seraing";
+        }
+
+        public POI(string newDescription, Coordonnees newCoordonnees) : base(newCoordonnees.Latitude,newCoordonnees.Longitude)
+        {
+            this.Description = newDescription;
         }
         #endregion
 
         #region CODE
         public override string ToString()
         {
-            return string.Format("Id : " + Id + " > " + "({0:0.###}, ", Latitude) + string.Format("{0:0.###})", Longitude) + " => " + Description + "    ";
+            return string.Format(base.ToString() + " => " + Description);
         }
         #endregion
     }

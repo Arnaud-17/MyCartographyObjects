@@ -15,32 +15,29 @@ namespace MyCartographyObjects
         #endregion
 
         #region PROPRIETES
-        public static long Idcpt
-        {
-            get { return _idcpt; }
-            set { _idcpt = value; }
-        }
-
         public long Id
         {
             get { return _id; }
-            set { _id = value; }
         }
         #endregion
 
         #region CONSTRUCTEURS
         public CartoObj()
         {
-            Id = Idcpt++;
+            _id = _idcpt++;
         }
         #endregion
 
         #region CODE
-
-        public virtual string Draw()
+        public virtual void Draw()
         {
-            return "Id > " + Id;
+            Console.WriteLine(ToString());
         }
-        #endregion 
+
+        public override string ToString()
+        {
+            return string.Format("Id : " + Id);
+        }
+        #endregion
     }
 }

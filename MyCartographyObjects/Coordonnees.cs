@@ -6,40 +6,56 @@ using System.Threading.Tasks;
 
 namespace MyCartographyObjects
 {
-    public class Coordonnees : CartoObj
+    public class Coordonnees : CartoObj, IIsPointClose
     {
         #region VARIABLES MEMBRES
-        private double _longitude;
         private double _latitude;
+        private double _longitude;
         #endregion
 
         #region PROPRIETES
-        public double Longitude
-        {
-            get { return _longitude; }
-            set { _longitude = value; }
-        }
         public double Latitude
         {
             get { return _latitude; }
             set { _latitude = value; }
         }
+        public double Longitude
+        {
+            get { return _longitude; }
+            set { _longitude = value; }
+        }
         #endregion
 
         #region CONSTRUCTEURS
-        public Coordonnees() : this(0.0, 0.0) { } //Constructeur par defaut
-
-        public Coordonnees(double newlongitude, double newlatitude) : base() //Constructeur D'init
+        public Coordonnees() //Constructeur par defaut
         {
-            Longitude = newlongitude;
-            Latitude = newlatitude;
+            this.Latitude = 0.0;
+            this.Longitude = 0.0;
+        }
+
+        public Coordonnees(double newlatitude,double newlongitude) //Constructeur D'init
+        {
+            this.Latitude = newlatitude;
+            this.Longitude = newlongitude;
+        }
+
+        public Coordonnees(Coordonnees previousCoordonnees)
+        {
+            Latitude = previousCoordonnees.Latitude;
+            Longitude = previousCoordonnees.Longitude;
         }
         #endregion
 
         #region CODE
         public override string ToString()
         {
-            return "Id : " + Id + " > " + "(" + Longitude + ";" + Latitude + ")";
+            return string.Format(base.ToString() + " > ({0:0.###}, ", Latitude) + string.Format("{0:0.###})", Longitude);
+        }
+
+        public bool IsPointClose(Coordonnees c2, double precision)
+        {
+            bool ret_val;
+            return ret_val = MathUtile.Pythagore(Latitude, Longitude, c2, precision); ;
         }
         #endregion
     }
