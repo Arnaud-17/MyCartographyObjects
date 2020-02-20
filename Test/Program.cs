@@ -59,7 +59,7 @@ namespace Test
             Console.WriteLine(poi1.IsPointClose(poi2, 4.9));
 
             Console.WriteLine("\n------ Polyl1 IsPointClose c5 -------");
-            Console.WriteLine(PolyL2.IsPointClose(new Coordonnees(-3.9,0),2));
+            Console.WriteLine(PolyL2.IsPointClose(new Coordonnees(-4.1,0),2));
 
             Console.ReadKey();
         }
