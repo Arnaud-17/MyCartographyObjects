@@ -7,7 +7,7 @@ using System.Windows.Media;
 
 namespace MyCartographyObjects
 {
-    public class Polyline : CartoObj, IIsPointClose
+    public class Polyline : CartoObj, IIsPointClose, IPointy
     {
         #region VARIABLES MEMBRES
         private Coordonnees[] _collection;
@@ -73,91 +73,33 @@ namespace MyCartographyObjects
 
         public bool IsPointClose(Coordonnees c2, double precision)
         {
-            int i=0;
-            double m,x,y,p;
-            double d = precision;
-            bool ret_val = true;
+            int i = 1;
+            bool ret_val;
+            bool PointClose = false;
 
-            Coordonnees coord1 = Collection[i];
-            Coordonnees coord2 = Collection[i + 1];
-            Coordonnees tmp;
-
-            if(coord2.Latitude < coord1.Latitude || coord2.Longitude < coord1.Longitude)
+            foreach (Coordonnees c in Collection)
             {
-                //Console.WriteLine("J'echange Collection[i] et Collection[i+1]");
-                tmp = coord1;
-                coord1 = coord2;
-                coord2 = tmp;
+                Coordonnees coord1 = Collection[i];
+                Coordonnees coord2 = Collection[i - 1];
+
+                ret_val = MathUtile.PointLineDistance(coord1, coord2,c2, precision);
+
+                if (ret_val == true)
+                    PointClose = true;
             }
 
-            //Console.WriteLine("coord1.lat = " + coord1.Latitude + " coord1.long = " + coord1.Longitude + " coord2.lat = " + coord2.Latitude + " coord2.long = " + coord2.Longitude);
-            //Console.WriteLine("c2.lat = " + c2.Latitude + " c2.long = " + c2.Longitude + " precision = " + precision);
-            if(coord1.Latitude == coord2.Latitude)
+            return PointClose;
+        }
+
+        public byte GetNumberOfPoint()
+        {
+            byte NbrPoint=0;
+
+            foreach(Coordonnees c in Collection)
             {
-                //Console.WriteLine("coord1.lat == coord2.lat");
-                if (c2.Longitude < coord1.Longitude)
-                {
-                    //Console.WriteLine("c2.lat < coord1.lat");
-                    ret_val = MathUtile.Pythagore(coord1.Latitude, coord1.Longitude, c2, precision);
-                }
-                else
-                {
-                    if(c2.Longitude > coord2.Longitude)
-                    {
-                        //Console.WriteLine("c2.lat > coord2.lat");
-                        ret_val = MathUtile.Pythagore(coord2.Latitude, coord2.Longitude, c2, precision);
-                    }
-                    else
-                    {
-                        //Console.WriteLine("c2 est entre la ligne");
-                        d = Math.Abs(coord1.Latitude - c2.Latitude);
-                    }
-                }
+                NbrPoint++;
             }
-            else
-            {
-                if(coord1.Longitude == coord2.Longitude)
-                {
-                    //Console.WriteLine("coord1.long == coord2.long");
-                    if (c2.Latitude < coord1.Latitude)
-                    {
-                        //Console.WriteLine("c2 < coord1.long");
-                        ret_val = MathUtile.Pythagore(coord1.Latitude, coord1.Longitude, c2, precision);
-                    }
-                    else
-                    {
-                        if (c2.Latitude > coord2.Latitude)
-                        {
-                            //Console.WriteLine("c2 > coord2.long");
-                            ret_val = MathUtile.Pythagore(coord2.Latitude, coord2.Longitude, c2, precision);
-                        }
-                        else
-                        {
-                            //Console.WriteLine("c2 est entre la ligne");
-                            d = Math.Abs(coord1.Longitude - c2.Longitude);
-                        }
-                    }
-                }
-                else
-                {
-                    m = (coord2.Longitude - coord1.Longitude) / (coord2.Latitude - coord1.Latitude);
-                    y = coord1.Longitude;
-                    x = coord1.Latitude;
-                    p = -m * x + y;
-
-                    //Console.WriteLine("y = " + y + " m = " + m + " x = " + x + " p = " + p);
-
-                    d = Math.Abs(-m * c2.Latitude + 1 * c2.Longitude - p) / Math.Sqrt(Math.Pow(m, 2) + Math.Pow(p, 2));
-
-                    //Console.WriteLine("d = " + d);
-                }
-            }
-
-            //Console.WriteLine(ret_val + " " + d);
-            if (ret_val == true && d <= precision)
-                return true;
-            else
-                return false;
+            return NbrPoint;
         }
         #endregion
     }

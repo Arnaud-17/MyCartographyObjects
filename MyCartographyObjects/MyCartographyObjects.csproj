@@ -46,6 +46,7 @@
     <Compile Include="CartoObj.cs" />
     <Compile Include="Coordonnees.cs" />
     <Compile Include="IIsPointClose.cs" />
+    <Compile Include="IPointy.cs" />
     <Compile Include="MathUtile.cs" />
     <Compile Include="POI.cs" />
     <Compile Include="Polygon.cs" />

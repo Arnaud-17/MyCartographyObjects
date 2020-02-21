@@ -13,8 +13,11 @@ namespace Test
         static void Main(string[] args)
         {
             Coordonnees c1 = new Coordonnees();
-            Coordonnees c2 = new Coordonnees(0,5) ;
-            Coordonnees c3 = new Coordonnees(5,0);
+            Coordonnees c2 = new Coordonnees(2,2) ;
+            Coordonnees c3 = new Coordonnees(4,-2);
+            Coordonnees c4 = new Coordonnees(1, -5);
+            Coordonnees c5 = new Coordonnees(-3,0);
+            Coordonnees c6 = new Coordonnees(5, 5);
 
             POI poi1 = new POI();
             POI poi2 = new POI("Magnée",c3);
@@ -22,8 +25,8 @@ namespace Test
             Polyline PolyL1 = new Polyline();
             Polygon PolyG1 = new Polygon();
 
-            Coordonnees[] tab1 = { new Coordonnees(0,0), new Coordonnees(-2,0) };
-            Coordonnees[] tab2 = { c3, c1, c2 };
+            Coordonnees[] tab1 = { new Coordonnees(0,0), new Coordonnees(-2,0), new Coordonnees(-2,-2)};
+            Coordonnees[] tab2 = { c3, c2 ,c4,c5,c6};
 
             Polyline PolyL2 = new Polyline(tab1, Colors.Blue, 10);
             Polygon PolyG2 = new Polygon(tab2, Colors.Lime, Colors.Aqua,1);
@@ -59,7 +62,13 @@ namespace Test
             Console.WriteLine(poi1.IsPointClose(poi2, 4.9));
 
             Console.WriteLine("\n------ Polyl1 IsPointClose c5 -------");
-            Console.WriteLine(PolyL2.IsPointClose(new Coordonnees(-4.1,0),2));
+            Console.WriteLine(PolyL2.IsPointClose(new Coordonnees(-3,-3),2));
+
+            Console.WriteLine("\n-------PolyG1 IsPointClose c6 ---------");
+            Console.WriteLine(PolyG2.IsPointClose(new Coordonnees(-3, 3),0));
+
+            Console.WriteLine("\n--------NbrPoint PolyL2-------------");
+            Console.WriteLine(PolyL2.GetNumberOfPoint());
 
             Console.ReadKey();
         }

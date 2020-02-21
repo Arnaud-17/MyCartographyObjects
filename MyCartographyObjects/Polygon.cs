@@ -83,7 +83,41 @@ namespace MyCartographyObjects
 
         public bool IsPointClose(Coordonnees c2, double presision)
         {
-            throw new NotImplementedException();
+            double LatMax=0, LongMax=0, LatMin=0, LongMin=0;
+
+            foreach (Coordonnees c in Collection)
+            {
+                if (c.Latitude < LatMin)
+                {
+                    LatMin = c.Latitude;
+                }
+                else
+                {
+                    if (c.Latitude > LatMax)
+                    {
+                        LatMax = c.Latitude;
+                    }
+                }
+
+                if (c.Longitude < LongMin)
+                {
+                    LongMin = c.Longitude;
+                }
+                else
+                {
+                    if (c.Longitude > LongMax)
+                    {
+                        LongMax = c.Longitude;
+                    }
+                }
+                
+            }
+            //Console.WriteLine("latMax = " + LatMax + " longmax = " + LongMax + " latmin = " + LatMin + " longmin = " + LongMin);
+            //Console.WriteLine("c2.lat = " + c2.Latitude + " c2.long = " + c2.Longitude);
+            if (c2.Latitude >= LatMin && c2.Latitude <= LatMax && c2.Longitude >= LongMin && c2.Longitude <= LongMax)
+                return true;
+            else
+                return false;
         }
 
         #endregion
