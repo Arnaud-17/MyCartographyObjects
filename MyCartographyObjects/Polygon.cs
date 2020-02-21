@@ -7,7 +7,7 @@ using System.Windows.Media;
 
 namespace MyCartographyObjects
 {
-    public class Polygon : CartoObj, IIsPointClose
+    public class Polygon : CartoObj, IIsPointClose, IPointy
     {
         #region VARIABLES MEMBRES
         private Coordonnees[] _collection;
@@ -119,7 +119,16 @@ namespace MyCartographyObjects
             else
                 return false;
         }
+        public byte GetNumberOfPoint()
+        {
+            byte NbrPoint = 0;
 
+            foreach (Coordonnees c in Collection)
+            {
+                NbrPoint++;
+            }
+            return NbrPoint;
+        }
         #endregion
     }
 }

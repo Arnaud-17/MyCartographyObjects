@@ -31,44 +31,48 @@ namespace Test
             Polyline PolyL2 = new Polyline(tab1, Colors.Blue, 10);
             Polygon PolyG2 = new Polygon(tab2, Colors.Lime, Colors.Aqua,1);
 
-            Console.WriteLine("---------------------------------------------");
+            Console.WriteLine("==============================================");
             Console.WriteLine("------ c1 (Cpd) ---------");
             Console.WriteLine(c1);
             Console.WriteLine("------ poi1 (Cpd) -------");
             Console.WriteLine(poi1);
 
-            Console.WriteLine("\n---------------------------------------------");
+            Console.WriteLine("\n==============================================");
             Console.WriteLine("------ c2 (Cinit) -------");
             Console.WriteLine(c2);
             Console.WriteLine("------ poi2 (Cinit) -----");
             Console.WriteLine(poi2);
 
-            Console.WriteLine("\n---------------------------------------------");
+            Console.WriteLine("\n==============================================");
             Console.WriteLine("------ PolyL1 (Cpd) -----");
             PolyL1.Draw();
             Console.WriteLine("\n------ PolyG1 (Cpd) -----");
             PolyG1.Draw();
 
-            Console.WriteLine("\n---------------------------------------------");
+            Console.WriteLine("\n==============================================");
             Console.WriteLine("------ PolyL2 (Cinit) -----");
             PolyL2.Draw();
             Console.WriteLine("\n------ PolyG2 (Cinit) -----");
             PolyG2.Draw();
 
-            Console.WriteLine("\n------ c1 IsPointClose c2 -------");
-            Console.WriteLine(c1.IsPointClose(new Coordonnees(0, 5), 4.9));
+            Console.WriteLine("\n==============================================");
+            Console.WriteLine("\nc1 IsPointClose c2");
+            Console.WriteLine("---> " + c1.IsPointClose(new Coordonnees(0, 5), 4.9));
 
-            Console.WriteLine("\n------ poi1 IsPointClose poi2 -------");
-            Console.WriteLine(poi1.IsPointClose(poi2, 4.9));
+            Console.WriteLine("\npoi1 IsPointClose poi2");
+            Console.WriteLine("---> " + poi1.IsPointClose(poi2, 4.9));
 
-            Console.WriteLine("\n------ Polyl1 IsPointClose c5 -------");
-            Console.WriteLine(PolyL2.IsPointClose(new Coordonnees(-3,-3),2));
+            Console.WriteLine("\nPolyline IsPointClose c");
+            Console.WriteLine("---> " + PolyL2.IsPointClose(new Coordonnees(-3,-3),2));
 
-            Console.WriteLine("\n-------PolyG1 IsPointClose c6 ---------");
-            Console.WriteLine(PolyG2.IsPointClose(new Coordonnees(-3, 3),0));
+            Console.WriteLine("\nPolygon IsPointClose c");
+            Console.WriteLine("---> " + PolyG2.IsPointClose(new Coordonnees(-3, 3),0));
 
-            Console.WriteLine("\n--------NbrPoint PolyL2-------------");
-            Console.WriteLine(PolyL2.GetNumberOfPoint());
+            Console.WriteLine("\nNbrPoint PolyLline");
+            Console.WriteLine("---> " + PolyL2.GetNumberOfPoint());
+
+            Console.WriteLine("\nNbrPoint Polygon");
+            Console.WriteLine("---> " + PolyG2.GetNumberOfPoint());
 
             Console.ReadKey();
         }
