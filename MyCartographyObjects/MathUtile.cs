@@ -131,5 +131,61 @@ namespace MyCartographyObjects
             else
                 return false;
         }
+
+        public static double Longueur(Coordonnees[] collection,int nbrPoint)
+        {
+            double distance;
+            double longueur=0; 
+            Coordonnees c1,c2;
+            int i;
+
+            for (i = 1; i < nbrPoint;i++)
+            {
+                c1 = collection[i];
+                c2 = collection[i - 1];
+
+                distance = Math.Sqrt(Math.Pow((c2.Latitude - c1.Latitude), 2) + Math.Pow((c2.Longitude - c1.Longitude), 2));
+                longueur += distance;
+            }
+            return longueur;
+        }
+        public static double PolylineBoundingBox(Coordonnees[] collection, int nbrPoint)
+        {
+            int i;
+            double LatMax = 0, LongMax = 0, LatMin = 0, LongMin = 0;
+            Coordonnees c;
+
+            for(i=1;i< nbrPoint; i++)
+            {
+                c = collection[i];
+
+                if (c.Latitude < LatMin)
+                {
+                    LatMin = c.Latitude;
+                }
+                else
+                {
+                    if (c.Latitude > LatMax)
+                    {
+                        LatMax = c.Latitude;
+                    }
+                }
+
+                if (c.Longitude < LongMin)
+                {
+                    LongMin = c.Longitude;
+                }
+                else
+                {
+                    if (c.Longitude > LongMax)
+                    {
+                        LongMax = c.Longitude;
+                    }
+                }
+            }
+
+            Console.WriteLine("latMax = " + LatMax + " longmax = " + LongMax + " latmin = " + LatMin + " longmin = " + LongMin);
+            return 0;
+        }
     }
 }

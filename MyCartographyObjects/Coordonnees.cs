@@ -51,6 +51,10 @@ namespace MyCartographyObjects
         {
             return string.Format(base.ToString() + " > ({0:0.###}, ", Latitude) + string.Format("{0:0.###})", Longitude);
         }
+        public override void Draw()
+        {
+            Console.WriteLine(ToString());
+        }
 
         public bool IsPointClose(Coordonnees c2, double precision)
         {

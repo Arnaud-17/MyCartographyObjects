@@ -48,6 +48,7 @@
     <Compile Include="IIsPointClose.cs" />
     <Compile Include="IPointy.cs" />
     <Compile Include="MathUtile.cs" />
+    <Compile Include="MyPolylineBoundingBoxComparer.cs" />
     <Compile Include="POI.cs" />
     <Compile Include="Polygon.cs" />
     <Compile Include="Polyline.cs" />

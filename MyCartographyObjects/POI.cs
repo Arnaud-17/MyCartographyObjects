@@ -37,6 +37,10 @@ namespace MyCartographyObjects
         {
             return string.Format(base.ToString() + " => " + Description);
         }
+        public override void Draw()
+        {
+            Console.WriteLine(ToString());
+        }
         #endregion
     }
 }

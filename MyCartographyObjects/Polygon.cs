@@ -68,7 +68,7 @@ namespace MyCartographyObjects
         public override void Draw()
         {
             Console.WriteLine(this.ToString());
-            Console.WriteLine("\nCollection Polygon :");
+            Console.WriteLine("Collection Polygon :");
 
             if (Collection != null)
             {

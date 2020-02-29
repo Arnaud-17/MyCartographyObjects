@@ -7,7 +7,7 @@ using System.Windows.Media;
 
 namespace MyCartographyObjects
 {
-    public class Polyline : CartoObj, IIsPointClose, IPointy
+    public class Polyline : CartoObj, IIsPointClose, IPointy, IComparable<Polyline>
     {
         #region VARIABLES MEMBRES
         private Coordonnees[] _collection;
@@ -58,7 +58,7 @@ namespace MyCartographyObjects
         public override void Draw()
         {
             Console.WriteLine(this.ToString());
-            Console.WriteLine("\nCollection Polyline :");
+            Console.WriteLine("Collection Polyline :");
 
             if (Collection != null)
             {
@@ -80,14 +80,13 @@ namespace MyCartographyObjects
             foreach (Coordonnees c in Collection)
             {
                 Coordonnees coord1 = Collection[i];
-                Coordonnees coord2 = Collection[i - 1];
+                Coordonnees coord2 = Collection[i-1];
 
                 ret_val = MathUtile.PointLineDistance(coord1, coord2,c2, precision);
 
                 if (ret_val == true)
                     PointClose = true;
             }
-
             return PointClose;
         }
 
@@ -100,6 +99,15 @@ namespace MyCartographyObjects
                 NbrPoint++;
             }
             return NbrPoint;
+        }
+
+        public int CompareTo(Polyline other)
+        {
+            int NbrPoint = GetNumberOfPoint();
+            int NbrPointOther = other.GetNumberOfPoint();
+            double d1 = MathUtile.Longueur(Collection,NbrPoint);
+            double d2 = MathUtile.Longueur(other.Collection, NbrPointOther);
+            return d1.CompareTo(d2);
         }
         #endregion
     }
