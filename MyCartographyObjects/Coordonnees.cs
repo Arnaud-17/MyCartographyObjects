@@ -59,7 +59,9 @@ namespace MyCartographyObjects
         public bool IsPointClose(Coordonnees c2, double precision)
         {
             bool ret_val;
-            return ret_val = MathUtile.Pythagore(Latitude, Longitude, c2, precision); ;
+            ret_val = MathUtile.Pythagore(Latitude, Longitude, c2, precision);
+            //Console.WriteLine(ret_val);
+            return ret_val;
         }
         #endregion
     }

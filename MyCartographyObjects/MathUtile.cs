@@ -10,15 +10,18 @@ namespace MyCartographyObjects
     {
         public static bool Pythagore(double Latitude, double Longitude, Coordonnees c, double precision)
         {
-            bool ret_val = true;
-            double d = precision;
+            double a,b,d;
 
-            //Console.WriteLine("Lat = " + Latitude + " long = " + Longitude + " c2.lat = " + c2.Latitude + " c2.long = " + c2.Longitude);
+            //Console.WriteLine("Lat = " + Latitude + " long = " + Longitude + " c.lat = " + c.Latitude + " c.long = " + c.Longitude);
             //Console.WriteLine("precision = " + precision);
             if(Longitude == c.Longitude)
             {
                 //Console.WriteLine("long == c2.long");
                 d = Math.Abs(Latitude - c.Latitude) ;
+                if (d < precision)
+                    return true;
+                else
+                    return false;
             }
             else
             {
@@ -26,31 +29,48 @@ namespace MyCartographyObjects
                 {
                     //Console.WriteLine("lat == c2.lat");
                     d = Math.Abs(Longitude - c.Longitude);
+                    if (d < precision)
+                        return true;
+                    else
+                        return false;
                 }
                 else
                 {
                     //Console.WriteLine("pythagore");
-                    double a = Longitude - c.Longitude;
-                    double b = Latitude - c.Latitude;
-
-                    if (Math.Pow(a, 2) + Math.Pow(b, 2) > Math.Pow(precision, 2))
-                        ret_val = true;
+                    if(Longitude > c.Longitude)
+                    {
+                        a = Math.Abs(Longitude) - Math.Abs(c.Longitude);
+                    }
                     else
-                        ret_val = false;
+                    {
+                         a = Math.Abs(c.Longitude) - Math.Abs(Longitude);
+                    }
+
+                    if(Latitude > c.Latitude)
+                    {
+                         b = Math.Abs(Latitude) - Math.Abs(c.Latitude);
+                    }
+                    else
+                    {
+                         b = Math.Abs(c.Latitude) - Math.Abs(Latitude);
+                    }
+
+                    //Console.WriteLine("a = " + a + " b = " + b);
+                    d = Math.Sqrt(Math.Pow(a, 2) + Math.Pow(b, 2));
+                    //Console.WriteLine("d = " + d);
+
+                    if (d <= precision)
+                        return true;
+                    else
+                        return false;
                 }
             }
-
-            //Console.WriteLine("ret_val pytha = " + ret_val + " d = " + d);
-            if (ret_val == true && d <= precision)
-                return true;
-            else
-                return false;
         }
         public static bool PointLineDistance(Coordonnees c1, Coordonnees c2, Coordonnees c, double precision)
         {
-            double m, x, y, p;
+            double a, x, y, b;
             double d = precision;
-            bool ret_val = true;
+            bool ret_val = false;
 
             Coordonnees tmp;
 
@@ -62,27 +82,36 @@ namespace MyCartographyObjects
                 c2 = tmp;
             }
 
-            //Console.WriteLine("coord1.lat = " + coord1.Latitude + " coord1.long = " + coord1.Longitude + " coord2.lat = " + coord2.Latitude + " coord2.long = " + coord2.Longitude);
-            //Console.WriteLine("c2.lat = " + c2.Latitude + " c2.long = " + c2.Longitude + " precision = " + precision);
+            //Console.WriteLine("c1.lat = " + c1.Latitude + " c1.long = " + c1.Longitude + " c2.lat = " + c2.Latitude + " c2.long = " + c2.Longitude);
+            //Console.WriteLine("c.lat = " + c.Latitude + " c.long = " + c.Longitude + " precision = " + precision);
             if (c1.Latitude == c2.Latitude)
             {
-                //Console.WriteLine("coord1.lat == coord2.lat");
+                //Console.WriteLine("c1.lat == c2.lat");
                 if (c.Longitude < c1.Longitude)
                 {
-                    //Console.WriteLine("c2.lat < coord1.lat");
+                    //Console.WriteLine("c.long < c1.long");
                     ret_val = Pythagore(c1.Latitude, c1.Longitude, c, precision);
+
+                    return ret_val;
                 }
                 else
                 {
                     if (c.Longitude > c2.Longitude)
                     {
-                        //Console.WriteLine("c2.lat > coord2.lat");
+                        //Console.WriteLine("c.long > c2.long");
                         ret_val = Pythagore(c2.Latitude, c2.Longitude, c, precision);
+
+                        return ret_val;
                     }
                     else
                     {
                         //Console.WriteLine("c2 est entre la ligne");
                         d = Math.Abs(c1.Latitude - c.Latitude);
+
+                        if (d <= precision)
+                            return true;
+                        else
+                            return false;
                     }
                 }
             }
@@ -90,56 +119,89 @@ namespace MyCartographyObjects
             {
                 if (c1.Longitude == c2.Longitude)
                 {
-                    //Console.WriteLine("coord1.long == coord2.long");
+                    //Console.WriteLine("c1.long == c2.long");
                     if (c.Latitude < c1.Latitude)
                     {
-                        //Console.WriteLine("c2 < coord1.long");
+                        //Console.WriteLine("c.lat < c1.lat");
                         ret_val = Pythagore(c1.Latitude, c1.Longitude, c, precision);
+                        return ret_val;
                     }
                     else
                     {
                         if (c.Latitude > c2.Latitude)
                         {
-                            //Console.WriteLine("c2 > coord2.long");
+                            //Console.WriteLine("c.lat > c2.lat");
                             ret_val = Pythagore(c2.Latitude, c2.Longitude, c, precision);
+                            return ret_val;
                         }
                         else
                         {
-                            //Console.WriteLine("c2 est entre la ligne");
+                            //Console.WriteLine("c est entre la ligne");
                             d = Math.Abs(c1.Longitude - c.Longitude);
+                            if (d <= precision)
+                                return true;
+                            else
+                                return false;
                         }
                     }
                 }
                 else
                 {
-                    m = (c2.Longitude - c1.Longitude) / (c2.Latitude - c1.Latitude);
-                    y = c1.Longitude;
-                    x = c1.Latitude;
-                    p = -m * x + y;
+                    if(c.Latitude < c1.Latitude || c.Longitude < c1.Longitude)
+                    {
+                        //Console.WriteLine("point en < des coord");
+                        ret_val = Pythagore(c1.Latitude, c1.Longitude, c, precision);
+                        return ret_val;
+                    }
+                    else
+                    {
+                        if(c.Latitude > c2.Latitude || c.Latitude > c.Longitude)
+                        {
+                            //Console.WriteLine("point en > des coord");
+                            ret_val = Pythagore(c2.Latitude, c2.Longitude, c, precision);
+                            return ret_val;
+                        }
+                        else
+                        {
+                            //Console.WriteLine("c1 et c2 ne sont pas sur les memes lignes");
+                            a = (c2.Longitude - c1.Longitude) / (c2.Latitude - c1.Latitude);
+                            y = c1.Longitude;
+                            x = c1.Latitude;
+                            b = -(a * x) + y;
+                            //Console.WriteLine("a = " + a + " b = " + b + " x =  " + x + " y = " + y);
 
-                    //Console.WriteLine("y = " + y + " m = " + m + " x = " + x + " p = " + p);
+                            b = -b;
+                            a = -a;
+                            
+                            //Console.WriteLine("a = " + a + " x0 = " + c.Latitude + " b = 1" + " y0 = " + c.Longitude + " c = " + b);
+                            d = Math.Abs((a * c.Latitude + 1 * c.Longitude + b) / Math.Sqrt(Math.Pow(a, 2) + Math.Pow(1, 2)));
 
-                    d = Math.Abs(-m * c.Latitude + 1 * c.Longitude - p) / Math.Sqrt(Math.Pow(m, 2) + Math.Pow(p, 2));
+                            //Console.WriteLine("d = " + d);
 
-                    //Console.WriteLine("d = " + d);
+                            if (d <= precision)
+                                return true;
+                            else
+                                return false;
+                        }
+                    }
                 }
             }
-
-            //Console.WriteLine(ret_val + " " + d);
-            if (ret_val == true && d <= precision)
-                return true;
-            else
-                return false;
         }
 
-        public static double Longueur(Coordonnees[] collection,int nbrPoint)
+        public static double Longueur(Coordonnees[] collection)
         {
             double distance;
-            double longueur=0; 
-            Coordonnees c1,c2;
+            double longueur=0;
             int i;
+            byte NbrPoint = 0;
+            Coordonnees c1, c2;
 
-            for (i = 1; i < nbrPoint;i++)
+            foreach (Coordonnees c in collection)
+            {
+                NbrPoint++;
+            }
+
+            for (i = 1; i < NbrPoint; i++)
             {
                 c1 = collection[i];
                 c2 = collection[i - 1];
@@ -148,44 +210,6 @@ namespace MyCartographyObjects
                 longueur += distance;
             }
             return longueur;
-        }
-        public static double PolylineBoundingBox(Coordonnees[] collection, int nbrPoint)
-        {
-            int i;
-            double LatMax = 0, LongMax = 0, LatMin = 0, LongMin = 0;
-            Coordonnees c;
-
-            for(i=1;i< nbrPoint; i++)
-            {
-                c = collection[i];
-
-                if (c.Latitude < LatMin)
-                {
-                    LatMin = c.Latitude;
-                }
-                else
-                {
-                    if (c.Latitude > LatMax)
-                    {
-                        LatMax = c.Latitude;
-                    }
-                }
-
-                if (c.Longitude < LongMin)
-                {
-                    LongMin = c.Longitude;
-                }
-                else
-                {
-                    if (c.Longitude > LongMax)
-                    {
-                        LongMax = c.Longitude;
-                    }
-                }
-            }
-
-            Console.WriteLine("latMax = " + LatMax + " longmax = " + LongMax + " latmin = " + LatMin + " longmin = " + LongMin);
-            return 0;
         }
     }
 }

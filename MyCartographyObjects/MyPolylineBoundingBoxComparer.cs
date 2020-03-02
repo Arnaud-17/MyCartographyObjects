@@ -6,17 +6,11 @@ using System.Threading.Tasks;
 
 namespace MyCartographyObjects
 {
-    public class MyPolylineBoundingBoxComparer : Polyline, IComparable<Polyline>
+    public class MyPolylineBoundingBoxComparer : IComparer<Polyline>
     {
-        public MyPolylineBoundingBoxComparer() : base() { }
-
-        public new int CompareTo(Polyline other)
+        public int Compare(Polyline x, Polyline y)
         {
-            int NbrPoint = GetNumberOfPoint();
-            int NbrPointOther = other.GetNumberOfPoint();
-            double d1 = MathUtile.PolylineBoundingBox(Collection, NbrPoint);
-            double d2 = MathUtile.PolylineBoundingBox(other.Collection, NbrPointOther);
-            return d1.CompareTo(d2);
+            return x.PolylineBoundingBox().CompareTo(y.PolylineBoundingBox());
         }
     }
 }

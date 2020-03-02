@@ -68,13 +68,13 @@ namespace MyCartographyObjects
         public override void Draw()
         {
             Console.WriteLine(this.ToString());
-            Console.WriteLine("Collection Polygon :");
+            Console.WriteLine("-----Collection Polygon-----");
 
             if (Collection != null)
             {
                 foreach (Coordonnees c in Collection)
                 {
-                    Console.WriteLine(c);
+                    Console.WriteLine("     " + c);
                 }
             }
             else

@@ -7,7 +7,7 @@ using System.Windows.Media;
 
 namespace MyCartographyObjects
 {
-    public class Polyline : CartoObj, IIsPointClose, IPointy, IComparable<Polyline>
+    public class Polyline : CartoObj, IIsPointClose, IPointy, IComparable<Polyline>, IEquatable<Polyline>
     {
         #region VARIABLES MEMBRES
         private Coordonnees[] _collection;
@@ -49,7 +49,7 @@ namespace MyCartographyObjects
         }
         #endregion
 
-        #region Draw
+        #region CODE
         public override string ToString()
         {
             return string.Format(base.ToString() + " > Couleur : " + Couleur + " / Epaisseur : " + Epaisseur);
@@ -58,13 +58,13 @@ namespace MyCartographyObjects
         public override void Draw()
         {
             Console.WriteLine(this.ToString());
-            Console.WriteLine("Collection Polyline :");
+            Console.WriteLine("-----Collection Polyline-----");
 
             if (Collection != null)
             {
                 foreach (Coordonnees c in Collection)
                 {
-                    Console.WriteLine(c);
+                    Console.WriteLine("     " +  c);
                 }
             }
             else
@@ -77,7 +77,8 @@ namespace MyCartographyObjects
             bool ret_val;
             bool PointClose = false;
 
-            foreach (Coordonnees c in Collection)
+            //foreach (Coordonnees c in Collection)
+            for(i=1; i <this.GetNumberOfPoint();i++)
             {
                 Coordonnees coord1 = Collection[i];
                 Coordonnees coord2 = Collection[i-1];
@@ -87,27 +88,71 @@ namespace MyCartographyObjects
                 if (ret_val == true)
                     PointClose = true;
             }
+            //Console.WriteLine(" PointClose = " + PointClose);
             return PointClose;
         }
 
         public byte GetNumberOfPoint()
         {
-            byte NbrPoint=0;
+            byte NbrPoint = 0;
 
-            foreach(Coordonnees c in Collection)
+            foreach (Coordonnees c in this.Collection)
             {
                 NbrPoint++;
             }
             return NbrPoint;
         }
+        public double PolylineBoundingBox()
+        {
+            int i;
+            byte k = GetNumberOfPoint();
+            double Longueur, Largeur;
+            double LatMax = 0, LongMax = 0, LatMin = 0, LongMin = 0;
+            Coordonnees c;
 
+            for (i = 1; i < k; i++)
+            {
+                c = Collection[i];
+
+                if (c.Latitude < LatMin)
+                {
+                    LatMin = c.Latitude;
+                }
+                else
+                {
+                    if (c.Latitude > LatMax)
+                    {
+                        LatMax = c.Latitude;
+                    }
+                }
+
+                if (c.Longitude < LongMin)
+                {
+                    LongMin = c.Longitude;
+                }
+                else
+                {
+                    if (c.Longitude > LongMax)
+                    {
+                        LongMax = c.Longitude;
+                    }
+                }
+            }
+            Longueur = LatMin - LatMax;
+            Largeur = LongMin - LongMax;
+
+            return Longueur * Largeur;
+        }
         public int CompareTo(Polyline other)
         {
-            int NbrPoint = GetNumberOfPoint();
-            int NbrPointOther = other.GetNumberOfPoint();
-            double d1 = MathUtile.Longueur(Collection,NbrPoint);
-            double d2 = MathUtile.Longueur(other.Collection, NbrPointOther);
+            double d1 = MathUtile.Longueur(this.Collection);
+            double d2 = MathUtile.Longueur(other.Collection);
             return d1.CompareTo(d2);
+        }
+        public bool Equals(Polyline other)
+        {
+            if (other == null) return false;
+            return (MathUtile.Longueur(this.Collection).Equals(MathUtile.Longueur(other.Collection)));
         }
         #endregion
     }
