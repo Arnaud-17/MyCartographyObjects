@@ -77,7 +77,6 @@ namespace MyCartographyObjects
             bool ret_val;
             bool PointClose = false;
 
-            //foreach (Coordonnees c in Collection)
             for(i=1; i <this.GetNumberOfPoint();i++)
             {
                 Coordonnees coord1 = Collection[i];
@@ -88,7 +87,6 @@ namespace MyCartographyObjects
                 if (ret_val == true)
                     PointClose = true;
             }
-            //Console.WriteLine(" PointClose = " + PointClose);
             return PointClose;
         }
 
