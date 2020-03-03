@@ -11,3 +11,4 @@ namespace MyCartographyObjects
         byte GetNumberOfPoint();
     }
 }
+

@@ -38,6 +38,8 @@ namespace MyCartographyObjects
         {
             return string.Format("Id : " + Id);
         }
-        #endregion
+
+        abstract public int NbrPointCarto();
+         #endregion
     }
 }

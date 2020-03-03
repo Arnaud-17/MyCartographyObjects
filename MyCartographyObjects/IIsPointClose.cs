@@ -11,3 +11,4 @@ namespace MyCartographyObjects
         bool IsPointClose(Coordonnees c2,double presision);
     }
 }
+

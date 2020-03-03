@@ -41,6 +41,10 @@ namespace MyCartographyObjects
         {
             Console.WriteLine(ToString());
         }
+        public override int NbrPointCarto()
+        {
+            return 1;
+        }
         #endregion
     }
 }

@@ -60,8 +60,12 @@ namespace MyCartographyObjects
         {
             bool ret_val;
             ret_val = MathUtile.Pythagore(Latitude, Longitude, c2, precision);
-            //Console.WriteLine(ret_val);
             return ret_val;
+        }
+
+        public override int NbrPointCarto()
+        {
+            return 1;
         }
         #endregion
     }

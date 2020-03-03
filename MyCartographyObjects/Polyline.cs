@@ -83,7 +83,7 @@ namespace MyCartographyObjects
                 Coordonnees coord1 = Collection[i];
                 Coordonnees coord2 = Collection[i-1];
 
-                ret_val = MathUtile.PointLineDistance(coord1, coord2,c2, precision);
+                ret_val = MathUtile.DistanceLignePoint(coord1, coord2,c2, precision);
 
                 if (ret_val == true)
                     PointClose = true;
@@ -153,6 +153,13 @@ namespace MyCartographyObjects
         {
             if (other == null) return false;
             return (MathUtile.Longueur(this.Collection).Equals(MathUtile.Longueur(other.Collection)));
+        }
+        public override int NbrPointCarto()
+        {
+            if (this.Collection == null)
+                return 0;
+            else
+                return this.GetNumberOfPoint();
         }
         #endregion
     }

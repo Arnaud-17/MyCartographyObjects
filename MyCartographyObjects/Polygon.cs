@@ -129,6 +129,13 @@ namespace MyCartographyObjects
             }
             return NbrPoint;
         }
+        public override int NbrPointCarto()
+        {
+            if (this.Collection == null)
+                return 0;
+            else
+                return GetNumberOfPoint();
+        }
         #endregion
     }
 }

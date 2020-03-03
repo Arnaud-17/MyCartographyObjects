@@ -27,7 +27,7 @@ namespace Test
 
             POI poi2 = new POI("Magnée", c3);
 
-            Coordonnees[] tab1 = { new Coordonnees(-3, 3), new Coordonnees(6, -1), new Coordonnees(-2, -2) };
+            Coordonnees[] tab1 = { new Coordonnees(2, 0), new Coordonnees(-4, 0), new Coordonnees(-4, -4) };
             Coordonnees[] tab2 = { c3, c2, c4, c5, c6 };
             Coordonnees[] tab3 = { new Coordonnees(3, 3), new Coordonnees(3, 8), new Coordonnees(2, 8) };
             Coordonnees[] tab4 = { new Coordonnees(-3, 3), new Coordonnees(0, 5), new Coordonnees(5, 2), new Coordonnees(2, -4), new Coordonnees(-2, -3) };
@@ -43,6 +43,7 @@ namespace Test
             Polyline Reference = new Polyline(tabref, Colors.DarkBlue, 2);
 
             MyPolylineBoundingBoxComparer pcomp = new MyPolylineBoundingBoxComparer();
+            CartoObjComparer ocomp = new CartoObjComparer();
 
             //Liste générique
             List<CartoObj> cartoObj = new List<CartoObj>()
@@ -97,7 +98,7 @@ namespace Test
             Console.WriteLine("---> " + poi1.IsPointClose(poi2, 4.9));
 
             Console.WriteLine("\nPolyline IsPointClose c");
-            Console.WriteLine("---> " + PolyL2.IsPointClose(new Coordonnees(2,2),2));
+            Console.WriteLine("---> " + PolyL2.IsPointClose(new Coordonnees(-3,-4),1.1));
 
             Console.WriteLine("\nPolygon IsPointClose c");
             Console.WriteLine("---> " + PolyG2.IsPointClose(new Coordonnees(-3, 3),0));
@@ -170,15 +171,8 @@ namespace Test
             else
             {
                 Console.WriteLine("Longueur polyline de reference = " + longueur);
-                Console.WriteLine("Longueur polyline trouver = " + MathUtile.Longueur(res.Collection) + "\n");
+                Console.WriteLine("Longueur polyline trouver = " + MathUtile.Longueur(res.Collection));
                 res.Draw();
-            }
-
-            Console.WriteLine("\n==============================================");
-            Console.WriteLine("\nAffichage d'une liste de CartoObj trier par nombre de point\n");
-            foreach (CartoObj c in cartoObj)
-            {
-                c.Draw();
             }
 
             Console.WriteLine("\n==============================================");
@@ -186,7 +180,7 @@ namespace Test
             int cpt = 0;
             foreach (Polyline p in polyline)
             {
-                if ((p.IsPointClose(new Coordonnees(5, 3),  1.1)) == true)
+                if ((p.IsPointClose(new Coordonnees(0, 0),  1)) == true)
                 {
                     Console.WriteLine("Ce polyline est proche du point");
                     p.Draw();
@@ -195,6 +189,15 @@ namespace Test
             }
             if (cpt == 0)
                 Console.WriteLine("Aucun Polyline n'est proche du point...");
+
+            Console.WriteLine("\n==============================================");
+            Console.WriteLine("\nAffichage d'une liste de CartoObj trier par nombre de point\n");
+            cartoObj.Sort(ocomp);
+            foreach (CartoObj c in cartoObj)
+            {
+                c.Draw();
+                Console.WriteLine("Nombre de point -------> " + c.NbrPointCarto() + "\n");
+            }
 
             Console.ReadKey();
         }

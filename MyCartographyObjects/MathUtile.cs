@@ -66,7 +66,7 @@ namespace MyCartographyObjects
                 }
             }
         }
-        public static bool PointLineDistance(Coordonnees c1, Coordonnees c2, Coordonnees c, double precision)
+       public static bool DistanceLignePoint(Coordonnees c1, Coordonnees c2, Coordonnees c, double precision)
         {
             double a, x, y, b;
             double d = precision;
@@ -84,7 +84,7 @@ namespace MyCartographyObjects
 
             //Console.WriteLine("c1.lat = " + c1.Latitude + " c1.long = " + c1.Longitude + " c2.lat = " + c2.Latitude + " c2.long = " + c2.Longitude);
             //Console.WriteLine("c.lat = " + c.Latitude + " c.long = " + c.Longitude + " precision = " + precision);
-            if (c1.Latitude == c2.Latitude)
+            if (c1.Latitude == c2.Latitude) //Les 2 coordonnees ont la même longitude
             {
                 //Console.WriteLine("c1.lat == c2.lat");
                 if (c.Longitude < c1.Longitude)
@@ -105,7 +105,7 @@ namespace MyCartographyObjects
                     }
                     else
                     {
-                        //Console.WriteLine("c2 est entre la ligne");
+                        //Console.WriteLine("c2 est entre la ligne"); --> car la pente est égale a null
                         d = Math.Abs(c1.Latitude - c.Latitude);
 
                         if (d <= precision)
@@ -117,7 +117,7 @@ namespace MyCartographyObjects
             }
             else
             {
-                if (c1.Longitude == c2.Longitude)
+                if (c1.Longitude == c2.Longitude) //Les 2 coordonnees ont la même latitude
                 {
                     //Console.WriteLine("c1.long == c2.long");
                     if (c.Latitude < c1.Latitude)
@@ -136,7 +136,7 @@ namespace MyCartographyObjects
                         }
                         else
                         {
-                            //Console.WriteLine("c est entre la ligne");
+                            //Console.WriteLine("c est entre la ligne"); --> car la pente est égale a null
                             d = Math.Abs(c1.Longitude - c.Longitude);
                             if (d <= precision)
                                 return true;
@@ -145,11 +145,11 @@ namespace MyCartographyObjects
                         }
                     }
                 }
-                else
+                else //Les 2 points n'ont pas la même longitude ou latitude
                 {
                     if(c.Latitude < c1.Latitude || c.Longitude < c1.Longitude)
                     {
-                        //Console.WriteLine("point en < des coord");
+                        //Console.WriteLine("le point est < que les coordonnees");
                         ret_val = Pythagore(c1.Latitude, c1.Longitude, c, precision);
                         return ret_val;
                     }
@@ -157,13 +157,13 @@ namespace MyCartographyObjects
                     {
                         if(c.Latitude > c2.Latitude || c.Latitude > c.Longitude)
                         {
-                            //Console.WriteLine("point en > des coord");
+                            //Console.WriteLine("le point est > que les coordonnees");
                             ret_val = Pythagore(c2.Latitude, c2.Longitude, c, precision);
                             return ret_val;
                         }
                         else
                         {
-                            //Console.WriteLine("c1 et c2 ne sont pas sur les memes lignes");
+                            //Console.WriteLine("le point est entre les 2 coordonnees");
                             a = (c2.Longitude - c1.Longitude) / (c2.Latitude - c1.Latitude);
                             y = c1.Longitude;
                             x = c1.Latitude;
@@ -213,3 +213,4 @@ namespace MyCartographyObjects
         }
     }
 }
+
